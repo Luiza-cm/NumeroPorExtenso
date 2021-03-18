@@ -1,0 +1,22 @@
+const express = require('express')
+const app = express()
+const port = 3000
+
+app.get('/:numero', (req, res) => {
+  console.log('mostra res', parseInt(req.params.numero, 10))
+  res.send({
+    // extenso: , ACRESCENTA AQUI AS FUNCOES DE TRANSFORMACAO 
+		  PARA EXTENSO
+  })
+})
+app.get('/unbsucks', (req, res) => {
+  res.send({
+    "unb": "é muito legal",
+    "estudar": "é muito bom"
+  })
+})
+
+
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+})
