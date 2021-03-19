@@ -1,3 +1,5 @@
+// ------------- DEFINICAO DAS FUNCOES QUE MAPEIAM AS PALAVRAS ASSOCIADAS A ORDEM DOS NUMEROS ---------------
+
 function Unidades(params) {
   var msg;
   switch(params){
@@ -135,19 +137,31 @@ function Centenas(params) {
 }
 
 
+  //-----------------  FUNCAO PRINCIPAL QUE CONVERTE O NUMERO EM SEU VALOR POR EXTENSO -----------------------
+
+// A logica seguida foi analisar o numero recebido como um vetor de inteiros, para entao associar cada numero
+// a sua palavra correspondente, levando em consideracao a posicao ocupada, podendo ser classificada como unidade U, 
+// dezena D, centena C,  unidade de milhar UM e dezena de milhar DM.    
+// Análise do vetor:  |DM|UM|C|D|U|
 
 function Resultado(param) {
   
-    const regex = /[ -,.-/:-~]/g;
+    const regex = /[ -,.-/:-~]/g;      //constante regex para com os intervalos de caracteres invalidos
     var tam = param.length;
 
 //    console.log(param);
 //    console.log(param.match(regex));
 
-    if ( param.match(regex) !== null && param != "favicon.ico" )
+
+  //---------------------------  ANALISE DOS DADOS DE ENTRADA -----------------------
+
+  // foi observada a passagem do favicon pela servidor, por isso foi necessario fazer sua desconsideracao 
+  // para o teste funcionar adequadamente
+
+    if ( param.match(regex) !== null && param != "favicon.ico" )    //analise de caracteres invalidos
       return("Entrada com caracter invalido. Tente novamente.");
 
-    if ( tam>6 && param != "favicon.ico" )
+    if ( tam>6 && param != "favicon.ico" )  //analise do tamanho da string recebida, que nao pode passar de 6
       return("Número fora do intervalo. Tente novamente.");
 
     
@@ -159,15 +173,15 @@ function Resultado(param) {
       vetornum[i] = parseInt(vetor[i]);   
     }
 
-    //verifica se o sinal negativo estah na posicao correta
+    //verifica se o sinal negativo estah na posicao correta - primeira posicao do vetor
     if(vetor.indexOf('-') !== -1 && vetor.indexOf('-') !== 0) {
       return("O sinal do numero esta na posicao errada.");
     }
 
-    var num_extenso; //variavel que guardara o numero por extenso - a resposta
+    var num_extenso; // **** variavel de retorno que guardara o numero por extenso - RESPOSTA ***
  
  
-    //logica para escrever o valor de cada digito de acordo com o tamanho do vetor e a posicao ocupada por cada num 
+    //Logica para escrever o valor de cada digito de acordo com sua posicacao ocupada e de acordo com tamanho de vetor  
     switch(tam){    
       case 1: 
           if(vetornum[0] == 0)
@@ -449,6 +463,7 @@ function Resultado(param) {
     return num_extenso;
 }
 
+//---------------------------  CONEXAO SERVIDOR -----------------------
 
 const express = require('express')
 const app = express()
