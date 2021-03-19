@@ -141,14 +141,14 @@ function Resultado(param) {
     const regex = /[ -,.-/:-~]/g;
     var tam = param.length;
 
-    console.log(param);
-    console.log(param.match(regex));
+//    console.log(param);
+//    console.log(param.match(regex));
 
-    if (param.match(regex) !== null || typeof param !== "number" )
-      console.log("Entrada com caracter invalido. Tente novamente.");
+    if ( param.match(regex) !== null && param != "favicon.ico" )
+      return("Entrada com caracter invalido. Tente novamente.");
 
-    if (tam>6)
-      console.log("Número fora do intervalo. Tente novamente.");
+    if ( tam>6 && param != "favicon.ico" )
+      return("Número fora do intervalo. Tente novamente.");
 
     
     var vetor = param.split(''),    //transforma a string param em vetor de caracteres
@@ -161,7 +161,7 @@ function Resultado(param) {
 
     //verifica se o sinal negativo estah na posicao correta
     if(vetor.indexOf('-') !== -1 && vetor.indexOf('-') !== 0) {
-      console.log("O sinal do numero esta na posicao errada.");
+      return("O sinal do numero esta na posicao errada.");
     }
 
     var num_extenso; //variavel que guardara o numero por extenso - a resposta
@@ -181,12 +181,11 @@ function Resultado(param) {
       case 2: 
           if(vetor[0] == '-'){
             num_extenso = "menos ";
-            num_extenso += Unidades(vetornum[1]);
+            num_extenso += Unidades(vetornum[1]);            
           }
           else{
             if(vetornum[0]==1){
               var pdezena = vetornum[1] + 10;
-              console.log("Valor calculado: ", pdezena);
               num_extenso = PrimeiraDezena(pdezena);
             }
             else{
@@ -202,9 +201,17 @@ function Resultado(param) {
       case 3:
           if(vetor[0] == '-'){
             num_extenso = "menos ";
-            num_extenso += Dezenas(vetornum[1]);
-            if(vetornum[2] == 0) break;
-            num_extenso += " e " + Unidades(vetornum[2]);
+            if(vetor[1] != 1){
+              num_extenso += Dezenas(vetornum[1]);
+              if(vetornum[2] == 0) break;
+              num_extenso += " e " + Unidades(vetornum[2]);
+            }
+            
+            else{
+              
+              var pdezena = vetornum[2] + 10;
+              num_extenso += PrimeiraDezena(pdezena);
+            }
           }
         else{
           if(vetornum[0]==1 && vetornum[1]==0 && vetornum[2]==0){
